@@ -3,6 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ClientModule } from './client/client.module';
+import { Client } from './client/entities/client.entity';
 
 @Module({
   imports: [
@@ -14,7 +16,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       database: process.env.DB_DATABASE,
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
+      entities: [Client],
     }),
+    ClientModule,
   ],
   controllers: [AppController],
   providers: [AppService],
