@@ -4,11 +4,12 @@ import {
   IsDate,
   IsEmail,
   MinLength,
+  IsNumber,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 
-export class FindAllClientQueryParams {
+export class FindAllMechanicQueryParams {
   constructor(limit = '10', offset = '0') {
     this.limit = limit;
     this.offset = offset;
@@ -30,11 +31,7 @@ export class FindAllClientQueryParams {
 
   @IsString()
   @IsOptional()
-  cpf_cnpj: string;
-
-  @IsString()
-  @IsOptional()
-  client_type: string;
+  cpf: string;
 
   @Type(() => Date)
   @IsDate()
@@ -49,23 +46,16 @@ export class FindAllClientQueryParams {
   @IsOptional()
   email: string;
 
-  @IsString()
+  @Type(() => Date)
+  @IsDate()
   @IsOptional()
-  zipCode: string;
+  hiringDate: Date;
+
+  @IsNumber()
+  @IsOptional()
+  serviceRate: number;
 
   @IsString()
   @IsOptional()
-  street: string;
-
-  @IsString()
-  @IsOptional()
-  number: string;
-
-  @IsString()
-  @IsOptional()
-  neighbourhood: string;
-
-  @IsString()
-  @IsOptional()
-  city: string;
+  status: string;
 }
