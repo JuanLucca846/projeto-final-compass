@@ -17,12 +17,12 @@ export class CarsService {
     private carRepository: Repository<Car>,
   ) {}
 
-  async create(createCarDto: CreateCarDto, id: string, license_plate: string) {
+  async create(createCarDto: CreateCarDto, id: string) {
     const checkCar = await this.carRepository.findOne({
-      where: { license_plate: license_plate },
+      where: { license_plate: createCarDto.license_plate },
     });
 
-    if (!checkCar) {
+    if (checkCar) {
       throw new ConflictException('Car with this license plate already exist');
     }
 
@@ -35,7 +35,7 @@ export class CarsService {
     return this.carRepository.save(carData);
   }
 
-  findAll(queryParams: FindAllCarQueryParams): Promise<Car[]> {
+  async findAll(queryParams: FindAllCarQueryParams) {
     const { offset, limit } = queryParams;
 
     const offsetInt = parseInt(offset);
@@ -77,11 +77,25 @@ export class CarsService {
       };
     }
 
-    return this.carRepository.find({
+    const findAllCar = await this.carRepository.find({
       skip: offsetInt * limitInt,
       take: limitInt,
       where,
     });
+
+    return {
+      limit: limitInt,
+      offset: offsetInt,
+      total: findAllCar.length,
+      items: findAllCar.map((car) => ({
+        id: car.id,
+        license_plate: car.license_plate,
+        model: car.model,
+        year: car.year,
+        manufacturer: car.manufacturer,
+        color: car.color,
+      })),
+    };
   }
 
   async findOne(id: string) {

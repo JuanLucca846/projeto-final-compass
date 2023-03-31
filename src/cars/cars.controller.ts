@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Query,
+  HttpCode,
 } from '@nestjs/common';
 import { CarsService } from './cars.service';
 import { FindAllCarQueryParams } from './dto/car/findAllCarQueryParams.dto';
@@ -18,12 +19,8 @@ export class CarsController {
   constructor(private readonly carsService: CarsService) {}
 
   @Post()
-  create(
-    @Body() createCarDto: CreateCarDto,
-    @Param('id') id: string,
-    license_plate: string,
-  ) {
-    return this.carsService.create(createCarDto, id, license_plate);
+  create(@Body() createCarDto: CreateCarDto, @Param('id') id: string) {
+    return this.carsService.create(createCarDto, id);
   }
 
   @Get()
@@ -42,6 +39,7 @@ export class CarsController {
   }
 
   @Delete(':id')
+  @HttpCode(204)
   remove(@Param('id') id: string) {
     return this.carsService.remove(id);
   }

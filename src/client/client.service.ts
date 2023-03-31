@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
@@ -19,7 +23,19 @@ export class ClientService {
       id: undefined,
     };
 
-    return this.clientRepository.save(clientData);
+    const checkEmail = await this.clientRepository.findOne({
+      where: { email: createClientDto.email },
+    });
+
+    if (checkEmail) {
+      throw new ConflictException('Email already exist');
+    }
+
+    return this.clientRepository.save({
+      ...clientData,
+      ...createClientDto,
+      password: '',
+    });
   }
 
   findAll(queryParams: FindAllClientQueryParams): Promise<Client[]> {
@@ -114,7 +130,28 @@ export class ClientService {
   }
 
   async findOne(id: string): Promise<Client | null> {
-    return this.clientRepository.findOne({ where: { id: id } });
+    const findById = await this.clientRepository.findOne({
+      where: { id: id },
+    });
+    if (!findById) {
+      throw new NotFoundException('Client not found');
+    }
+
+    return {
+      id: findById.id,
+      name: findById.name,
+      cpf_cnpj: findById.cpf_cnpj,
+      client_type: findById.client_type,
+      birthday: findById.birthday,
+      phone: findById.phone,
+      email: findById.email,
+      password: '',
+      zipCode: findById.zipCode,
+      street: findById.street,
+      number: findById.number,
+      neighbourhood: findById.neighbourhood,
+      city: findById.city,
+    };
   }
 
   async update(id: string, updateClientDto: UpdateClientDto) {
@@ -122,9 +159,14 @@ export class ClientService {
       where: { id },
     });
 
+    if (!clientData) {
+      throw new NotFoundException('Client not found to update');
+    }
+
     return this.clientRepository.save({
       ...clientData,
       ...updateClientDto,
+      password: '',
     });
   }
 }
