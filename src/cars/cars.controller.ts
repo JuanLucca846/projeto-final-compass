@@ -18,8 +18,12 @@ export class CarsController {
   constructor(private readonly carsService: CarsService) {}
 
   @Post()
-  create(@Body() createCarDto: CreateCarDto, @Param('id') id: string) {
-    return this.carsService.create(createCarDto, id);
+  create(
+    @Body() createCarDto: CreateCarDto,
+    @Param('id') id: string,
+    license_plate: string,
+  ) {
+    return this.carsService.create(createCarDto, id, license_plate);
   }
 
   @Get()

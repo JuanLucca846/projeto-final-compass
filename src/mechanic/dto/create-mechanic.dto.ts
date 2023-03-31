@@ -43,9 +43,9 @@ export class CreateMechanicDto {
   @IsNotEmpty()
   hiringDate: Date;
 
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
-  serviceFee: number;
+  serviceFee: string;
 
   @IsString()
   @IsNotEmpty()

@@ -1,8 +1,7 @@
-import { IsString, IsOptional, IsDate, IsEmail } from 'class-validator';
+import { IsString, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
 
-export class FindAllMechanicQueryParams {
+export class FindAllServiceQueryParams {
   constructor(limit = '10', offset = '0') {
     this.limit = limit;
     this.offset = offset;
@@ -20,33 +19,23 @@ export class FindAllMechanicQueryParams {
 
   @IsString()
   @IsOptional()
-  name: string;
+  id: string;
 
   @IsString()
   @IsOptional()
-  cpf: string;
-
-  @Type(() => Date)
-  @IsDate()
-  @IsOptional()
-  birthday: Date;
+  clientId: string;
 
   @IsString()
   @IsOptional()
-  phone: string;
-
-  @IsEmail()
-  @IsOptional()
-  email: string;
-
-  @Type(() => Date)
-  @IsDate()
-  @IsOptional()
-  hiringDate: Date;
+  carId: string;
 
   @IsString()
   @IsOptional()
-  serviceFee: string;
+  mechanicId: string;
+
+  @IsString()
+  @IsOptional()
+  serviceDeliveryDate: string;
 
   @IsString()
   @IsOptional()

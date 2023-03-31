@@ -24,7 +24,7 @@ export class MechanicService {
       password: createMechanicDto.password,
       specialities: createMechanicDto.specialities,
       hiringDate: createMechanicDto.hiringDate,
-      serviceFee: createMechanicDto.serviceFee,
+      serviceFee: parseInt(createMechanicDto.serviceFee),
       status: createMechanicDto.status,
     };
 
@@ -80,10 +80,10 @@ export class MechanicService {
       };
     }
 
-    if (queryParams.serviceRate) {
+    if (queryParams.serviceFee) {
       where = {
         ...where,
-        serviceRate: queryParams.serviceRate,
+        serviceFee: parseInt(queryParams.serviceFee.toString()),
       };
     }
 
@@ -115,6 +115,7 @@ export class MechanicService {
     return this.mechanicRepository.save({
       ...mechanicData,
       ...updateMechanicDto,
+      serviceFee: parseInt(updateMechanicDto.serviceFee),
     });
   }
 

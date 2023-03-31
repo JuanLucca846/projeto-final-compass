@@ -9,6 +9,11 @@ import { MechanicModule } from './mechanic/mechanic.module';
 import { Mechanic } from './mechanic/entities/mechanic.entity';
 import { CarsModule } from './cars/cars.module';
 import { Car } from './cars/entities/car.entity';
+import { ServiceModule } from './service/service.module';
+import { PartsModule } from './parts/parts.module';
+import { Service } from './service/entities/service.entity';
+import { Part } from './parts/entities/part.entity';
+import { ServiceHasParts } from './service/entities/serviceHasParts.entity';
 
 @Module({
   imports: [
@@ -20,12 +25,14 @@ import { Car } from './cars/entities/car.entity';
       database: process.env.DB_DATABASE,
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
-      entities: [Client, Mechanic, Car],
+      entities: [Client, Mechanic, Car, Service, Part, ServiceHasParts],
       logging: false,
     }),
     ClientModule,
     MechanicModule,
     CarsModule,
+    ServiceModule,
+    PartsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
