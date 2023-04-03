@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Client } from 'src/client/entities/client.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity({ name: 'car' })
 export class Car {
@@ -22,4 +29,8 @@ export class Car {
 
   @Column()
   client_id: string;
+
+  @ManyToOne(() => Client, (client) => client.cars)
+  @JoinColumn({ name: 'client_id', referencedColumnName: 'id' })
+  client?: Client;
 }

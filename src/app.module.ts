@@ -14,6 +14,8 @@ import { PartsModule } from './parts/parts.module';
 import { Service } from './service/entities/service.entity';
 import { Part } from './parts/entities/part.entity';
 import { ServiceHasParts } from './service/entities/serviceHasParts.entity';
+import { LoginModule } from './login/login.module';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -33,6 +35,7 @@ import { ServiceHasParts } from './service/entities/serviceHasParts.entity';
     CarsModule,
     ServiceModule,
     PartsModule,
+    LoginModule,
   ],
   controllers: [AppController],
   providers: [AppService],

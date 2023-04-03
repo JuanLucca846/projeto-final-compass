@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Car } from 'src/cars/entities/car.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  JoinTable,
+} from 'typeorm';
 
 @Entity({ name: 'clients' })
 export class Client {
@@ -40,4 +47,7 @@ export class Client {
 
   @Column()
   city: string;
+
+  @OneToMany(() => Car, (car) => car.client)
+  cars?: Car[];
 }

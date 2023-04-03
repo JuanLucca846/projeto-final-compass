@@ -39,9 +39,4 @@ export class MechanicController {
   ) {
     return this.mechanicService.update(id, updateMechanicDto);
   }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.mechanicService.remove(+id);
-  }
 }

@@ -9,6 +9,7 @@ import { UpdateClientDto } from './dto/update-client.dto';
 import { Repository } from 'typeorm';
 import { Client } from './entities/client.entity';
 import { FindAllClientQueryParams } from './dto/client/findAllClientQueryParams.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class ClientService {
@@ -21,6 +22,7 @@ export class ClientService {
     const clientData: Client = {
       ...createClientDto,
       id: undefined,
+      password: await bcrypt.hash(createClientDto.password, 10),
     };
 
     const checkEmail = await this.clientRepository.findOne({
@@ -31,14 +33,16 @@ export class ClientService {
       throw new ConflictException('Email already exist');
     }
 
-    return this.clientRepository.save({
+    let saveClient = await this.clientRepository.save({
       ...clientData,
-      ...createClientDto,
-      password: '',
     });
+
+    saveClient.password = '';
+
+    return saveClient;
   }
 
-  findAll(queryParams: FindAllClientQueryParams): Promise<Client[]> {
+  async findAll(queryParams: FindAllClientQueryParams) {
     const { offset, limit } = queryParams;
 
     const offsetInt = parseInt(offset);
@@ -122,11 +126,38 @@ export class ClientService {
       };
     }
 
-    return this.clientRepository.find({
+    const findAllClient = await this.clientRepository.find({
       skip: offsetInt * limitInt,
       take: limitInt,
       where,
+      relations: ['cars'],
     });
+
+    return {
+      limit: limitInt,
+      offset: offsetInt,
+      total: findAllClient.length,
+      items: findAllClient.map((client) => ({
+        id: client.id,
+        name: client.name,
+        cpf_cnpj: client.cpf_cnpj,
+        client_type: client.client_type,
+        phone: client.phone,
+        email: client.email,
+        street: client.street,
+        number: client.number,
+        neighbourhood: client.neighbourhood,
+        city: client.city,
+        zipCode: client.zipCode,
+        cars: client?.cars?.map((car) => ({
+          license_plate: car.license_plate,
+          model: car.model,
+          year: car.year,
+          manufacturer: car.manufacturer,
+          color: car.color,
+        })),
+      })),
+    };
   }
 
   async findOne(id: string): Promise<Client | null> {

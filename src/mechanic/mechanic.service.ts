@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ConflictException } from '@nestjs/common';
 import { CreateMechanicDto } from './dto/create-mechanic.dto';
 import { UpdateMechanicDto } from './dto/update-mechanic.dto';
 import { Mechanic } from './entities/mechanic.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { FindAllMechanicQueryParams } from './dto/mechanic/findAllMechanicQueryParams.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class MechanicService {
@@ -21,17 +22,31 @@ export class MechanicService {
       birthday: createMechanicDto.birthday,
       phone: createMechanicDto.phone,
       email: createMechanicDto.email,
-      password: createMechanicDto.password,
+      password: await bcrypt.hash(createMechanicDto.password, 10),
       specialities: createMechanicDto.specialities,
       hiringDate: createMechanicDto.hiringDate,
       serviceFee: parseInt(createMechanicDto.serviceFee),
       status: createMechanicDto.status,
     };
 
-    return this.mechanicRepository.save(mechanicData);
+    const checkEmail = await this.mechanicRepository.findOne({
+      where: { email: createMechanicDto.email },
+    });
+
+    if (checkEmail) {
+      throw new ConflictException('Email already exist');
+    }
+
+    let saveMechanic = await this.mechanicRepository.save({
+      ...mechanicData,
+    });
+
+    saveMechanic.password = '';
+
+    return saveMechanic;
   }
 
-  async findAll(queryParams: FindAllMechanicQueryParams): Promise<Mechanic[]> {
+  async findAll(queryParams: FindAllMechanicQueryParams) {
     const { offset, limit } = queryParams;
 
     const offsetInt = parseInt(offset);
@@ -94,11 +109,29 @@ export class MechanicService {
       };
     }
 
-    return this.mechanicRepository.find({
+    const findAllMechanic = await this.mechanicRepository.find({
       skip: offsetInt * limitInt,
       take: limitInt,
       where,
     });
+
+    return {
+      limit: limitInt,
+      offset: offsetInt,
+      total: findAllMechanic.length,
+      items: findAllMechanic.map((mechanic) => ({
+        id: mechanic.id,
+        name: mechanic.name,
+        cpf: mechanic.cpf,
+        birthday: mechanic.birthday,
+        phone: mechanic.phone,
+        email: mechanic.email,
+        specialties: mechanic.specialities,
+        hiringDate: mechanic.hiringDate,
+        serviceFee: mechanic.serviceFee,
+        status: mechanic.status,
+      })),
+    };
   }
 
   async findOne(id: string) {
@@ -117,9 +150,5 @@ export class MechanicService {
       ...updateMechanicDto,
       serviceFee: parseInt(updateMechanicDto.serviceFee),
     });
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} mechanic`;
   }
 }
