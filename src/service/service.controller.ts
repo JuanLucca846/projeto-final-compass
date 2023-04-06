@@ -12,7 +12,9 @@ import { ServiceService } from './service.service';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 import { FindAllServiceQueryParams } from './dto/service/findAllServiceQueryParams.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Auto Service > Service')
 @Controller('services')
 export class ServiceController {
   constructor(private readonly serviceService: ServiceService) {}
@@ -35,10 +37,5 @@ export class ServiceController {
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateServiceDto: UpdateServiceDto) {
     return this.serviceService.update(id, updateServiceDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.serviceService.remove(+id);
   }
 }

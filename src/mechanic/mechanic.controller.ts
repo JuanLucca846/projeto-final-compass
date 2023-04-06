@@ -12,7 +12,9 @@ import { MechanicService } from './mechanic.service';
 import { CreateMechanicDto } from './dto/create-mechanic.dto';
 import { UpdateMechanicDto } from './dto/update-mechanic.dto';
 import { FindAllMechanicQueryParams } from './dto/mechanic/findAllMechanicQueryParams.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Auto Service > Mechanic')
 @Controller('mechanics')
 export class MechanicController {
   constructor(private readonly mechanicService: MechanicService) {}

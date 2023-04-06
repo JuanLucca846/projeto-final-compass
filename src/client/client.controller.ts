@@ -12,7 +12,9 @@ import { ClientService } from './client.service';
 import { FindAllClientQueryParams } from './dto/client/findAllClientQueryParams.dto';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Auto Service > Client')
 @Controller('clients')
 export class ClientController {
   constructor(private readonly clientService: ClientService) {}

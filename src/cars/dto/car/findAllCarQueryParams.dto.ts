@@ -7,32 +7,37 @@ export class FindAllCarQueryParams {
     this.offset = offset;
   }
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   offset: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   limit: string;
 
+  @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   license_plate: string;
 
+  @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   model: string;
 
+  @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   year: string;
 
+  @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   manufacturer: string;
 
+  @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   color: string;

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 import { Service } from './entities/service.entity';
@@ -48,7 +48,7 @@ export class ServiceService {
       const newQtd = parts.qtd - serviceHasParts.qtd;
       parts.qtd = newQtd;
       if (parts.qtd < 0) {
-        throw new Error('No parts available');
+        throw new ConflictException('No parts available');
       }
       await this.partRepository.save(parts);
       serviceData.serviceHasParts.push(serviceHasParts);
@@ -208,9 +208,5 @@ export class ServiceService {
       ...serviceData,
       ...updateServiceDto,
     });
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} service`;
   }
 }

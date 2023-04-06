@@ -8,46 +8,57 @@ export class FindAllMechanicQueryParams {
     this.offset = offset;
   }
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   offset: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   limit: string;
 
+  @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   name: string;
 
+  @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   cpf: string;
 
+  @ApiProperty({ required: false })
   @Type(() => Date)
   @IsDate()
   @IsOptional()
   birthday: Date;
 
+  @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   phone: string;
 
+  @ApiProperty({ required: false })
   @IsEmail()
   @IsOptional()
   email: string;
 
+  @ApiProperty({ required: false })
   @Type(() => Date)
   @IsDate()
   @IsOptional()
   hiringDate: Date;
 
+  @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   serviceFee: string;
 
+  @ApiProperty({
+    required: false,
+    enum: ['active', 'inactive', 'vacations', 'busy'],
+  })
   @IsString()
   @IsOptional()
   status: string;

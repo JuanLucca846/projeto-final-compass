@@ -3,7 +3,9 @@ import { LoginService } from './login.service';
 import { LoginDto } from './dto/create-login.dto';
 import { UpdateLoginDto } from './dto/update-login.dto';
 import { TokenDto } from './dto/refresh-token.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Auto Service > Login')
 @Controller()
 export class LoginController {
   constructor(private readonly loginService: LoginService) {}

@@ -7,28 +7,32 @@ export class FindAllPartQueryParams {
     this.offset = offset;
   }
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   offset: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   limit: string;
 
+  @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   title: string;
 
+  @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   description: string;
 
-  @IsString()
+  @ApiProperty({ required: false })
+  @IsNumber()
   @IsOptional()
-  qtd: string;
+  qtd: number;
 
+  @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   unitPrice: string;

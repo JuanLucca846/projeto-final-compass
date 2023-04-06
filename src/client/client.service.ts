@@ -186,18 +186,22 @@ export class ClientService {
   }
 
   async update(id: string, updateClientDto: UpdateClientDto) {
-    const clientData = await this.clientRepository.findOne({
+    const findClientData = await this.clientRepository.findOne({
       where: { id },
     });
 
-    if (!clientData) {
+    if (!findClientData) {
       throw new NotFoundException('Client not found to update');
     }
 
-    return this.clientRepository.save({
-      ...clientData,
+    let saveClient = await this.clientRepository.save({
+      ...findClientData,
       ...updateClientDto,
-      password: '',
+      password: await bcrypt.hash(updateClientDto.password, 10),
     });
+
+    saveClient.password = '';
+
+    return saveClient;
   }
 }

@@ -83,8 +83,4 @@ export class PartsService {
       ...updatePartDto,
     });
   }
-
-  remove(id: number) {
-    return `This action removes a #${id} part`;
-  }
 }

@@ -13,7 +13,9 @@ import { CarsService } from './cars.service';
 import { FindAllCarQueryParams } from './dto/car/findAllCarQueryParams.dto';
 import { CreateCarDto } from './dto/create-car.dto';
 import { UpdateCarDto } from './dto/update-car.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Auto Service > Client > Cars')
 @Controller('clients/:id/cars')
 export class CarsController {
   constructor(private readonly carsService: CarsService) {}
@@ -24,23 +26,30 @@ export class CarsController {
   }
 
   @Get()
-  findAll(@Query() findAllCarQueryParams: FindAllCarQueryParams) {
-    return this.carsService.findAll(findAllCarQueryParams);
+  findAll(
+    @Query() findAllCarQueryParams: FindAllCarQueryParams,
+    @Param('id') id: string,
+  ) {
+    return this.carsService.findAll(findAllCarQueryParams, id);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.carsService.findOne(id);
+  @Get(':carId')
+  findOne(@Param('id') id: string, @Param('carId') carId: string) {
+    return this.carsService.findOne(id, carId);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCarDto: UpdateCarDto) {
-    return this.carsService.update(id, updateCarDto);
+  @Patch(':carId')
+  update(
+    @Param('id') id: string,
+    @Param('carId') carId: string,
+    @Body() updateCarDto: UpdateCarDto,
+  ) {
+    return this.carsService.update(id, carId, updateCarDto);
   }
 
-  @Delete(':id')
+  @Delete(':carId')
   @HttpCode(204)
-  remove(@Param('id') id: string) {
-    return this.carsService.remove(id);
+  remove(@Param('id') id: string, @Param('carId') carId: string) {
+    return this.carsService.remove(id, carId);
   }
 }

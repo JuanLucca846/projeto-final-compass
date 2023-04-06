@@ -35,13 +35,14 @@ export class CarsService {
     return this.carRepository.save(carData);
   }
 
-  async findAll(queryParams: FindAllCarQueryParams) {
+  async findAll(queryParams: FindAllCarQueryParams, clientId: string) {
     const { offset, limit } = queryParams;
 
     const offsetInt = parseInt(offset);
     const limitInt = parseInt(limit);
 
-    let where = {};
+    let where: any = { client_id: clientId };
+
     if (queryParams.license_plate) {
       where = {
         ...where,
@@ -98,8 +99,10 @@ export class CarsService {
     };
   }
 
-  async findOne(id: string) {
-    const checkCar = await this.carRepository.findOne({ where: { id: id } });
+  async findOne(clientId: string, carId: string) {
+    const checkCar = await this.carRepository.findOne({
+      where: { client_id: clientId, id: carId },
+    });
     if (!checkCar) {
       throw new NotFoundException('Car not found');
     }
@@ -107,9 +110,9 @@ export class CarsService {
     return checkCar;
   }
 
-  async update(id: string, updateCarDto: UpdateCarDto) {
+  async update(clientId: string, carId: string, updateCarDto: UpdateCarDto) {
     const carData = await this.carRepository.findOne({
-      where: { id },
+      where: { client_id: clientId, id: carId },
     });
 
     if (!carData) {
@@ -122,11 +125,13 @@ export class CarsService {
     });
   }
 
-  async remove(id: string) {
-    const checkCar = await this.carRepository.findOne({ where: { id: id } });
+  async remove(clientId: string, carId: string) {
+    const checkCar = await this.carRepository.findOne({
+      where: { client_id: clientId, id: carId },
+    });
     if (!checkCar) {
       throw new NotFoundException('Can not find a car to delete');
     }
-    return this.carRepository.delete({ id: id });
+    return this.carRepository.delete({ id: carId });
   }
 }

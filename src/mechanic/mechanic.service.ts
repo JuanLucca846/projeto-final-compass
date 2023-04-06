@@ -1,4 +1,8 @@
-import { Injectable, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  ConflictException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateMechanicDto } from './dto/create-mechanic.dto';
 import { UpdateMechanicDto } from './dto/update-mechanic.dto';
 import { Mechanic } from './entities/mechanic.entity';
@@ -141,14 +145,19 @@ export class MechanicService {
   }
 
   async update(id: string, updateMechanicDto: UpdateMechanicDto) {
-    const mechanicData = await this.mechanicRepository.findOne({
+    const findMechanicData = await this.mechanicRepository.findOne({
       where: { id },
     });
 
+    if (!findMechanicData) {
+      throw new NotFoundException('Mechanic not found');
+    }
+
     return this.mechanicRepository.save({
-      ...mechanicData,
+      ...findMechanicData,
       ...updateMechanicDto,
       serviceFee: parseInt(updateMechanicDto.serviceFee),
+      password: await bcrypt.hash(updateMechanicDto.password, 10),
     });
   }
 }

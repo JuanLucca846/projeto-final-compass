@@ -12,7 +12,9 @@ import { PartsService } from './parts.service';
 import { CreatePartDto } from './dto/create-part.dto';
 import { UpdatePartDto } from './dto/update-part.dto';
 import { FindAllPartQueryParams } from './dto/part/findAllPartQueryParams.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Auto Service > Parts')
 @Controller('parts')
 export class PartsController {
   constructor(private readonly partsService: PartsService) {}
@@ -35,10 +37,5 @@ export class PartsController {
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePartDto: UpdatePartDto) {
     return this.partsService.update(id, updatePartDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.partsService.remove(+id);
   }
 }
