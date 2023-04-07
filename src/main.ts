@@ -26,6 +26,7 @@ async function bootstrap() {
     .addTag('Auto Service > Parts')
     .addTag('Auto Service > Login')
     .addTag('Auto Service > Service')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

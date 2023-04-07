@@ -1,9 +1,13 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards } from '@nestjs/common';
 import { LoginService } from './login.service';
 import { LoginDto } from './dto/create-login.dto';
 import { UpdateLoginDto } from './dto/update-login.dto';
 import { TokenDto } from './dto/refresh-token.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from './jwt-auth.guard';
+import { Roles } from './roles.decorator';
+import { roles } from './dto/roles.enum';
+import { RolesGuard } from './roles.guard';
 
 @ApiTags('Auto Service > Login')
 @Controller()
@@ -23,21 +27,33 @@ export class LoginController {
     );
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Roles(roles.CLIENT)
   @Post('client/updatePassword')
   updateClientPassword(@Body() updateLoginDto: UpdateLoginDto) {
     return this.loginService.updateClientPassword(updateLoginDto);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Roles(roles.MECHANIC)
   @Post('mechanic/updatePassword')
   updateMechanicPassword(@Body() updateLoginDto: UpdateLoginDto) {
     return this.loginService.updateMechanicPassword(updateLoginDto);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Roles(roles.CLIENT)
   @Post('client/refreshToken')
   refreshClientToken(@Body() tokenDto: TokenDto) {
     return this.loginService.refreshClientToken(tokenDto);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Roles(roles.MECHANIC)
   @Post('mechanic/refreshToken')
   refreshMechanicToken(@Body() tokenDto: TokenDto) {
     return this.loginService.refreshMechanicToken(tokenDto);

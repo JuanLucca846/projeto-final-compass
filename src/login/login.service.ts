@@ -15,6 +15,7 @@ import { instanceToPlain } from 'class-transformer';
 import { TokenDto } from './dto/refresh-token.dto';
 import { JwtDecodeClient } from './dto/jwt-decodeClient.dto';
 import { JwtDecodeMechanic } from './dto/jwt-decodeMechanic.dto';
+import { roles } from './dto/roles.enum';
 
 @Injectable()
 export class LoginService {
@@ -38,7 +39,11 @@ export class LoginService {
 
     client.password = '';
     const plain = instanceToPlain(client);
-    const token = await this.jwtService.sign(plain);
+    const clientRole = {
+      ...plain,
+      role: roles.CLIENT,
+    };
+    const token = await this.jwtService.sign(clientRole);
 
     return {
       token,
@@ -57,7 +62,11 @@ export class LoginService {
 
     mechanic.password = '';
     const plain = instanceToPlain(mechanic);
-    const token = await this.jwtService.sign(plain);
+    const mechanicRole = {
+      ...mechanic,
+      role: roles.MECHANIC,
+    };
+    const token = await this.jwtService.sign(mechanicRole);
 
     return {
       token,

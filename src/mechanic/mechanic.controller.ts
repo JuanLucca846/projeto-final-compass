@@ -7,12 +7,16 @@ import {
   Param,
   Delete,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { MechanicService } from './mechanic.service';
 import { CreateMechanicDto } from './dto/create-mechanic.dto';
 import { UpdateMechanicDto } from './dto/update-mechanic.dto';
 import { FindAllMechanicQueryParams } from './dto/mechanic/findAllMechanicQueryParams.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { roles } from 'src/login/dto/roles.enum';
+import { Roles } from 'src/login/roles.decorator';
+import { JwtAuthGuard } from 'src/login/jwt-auth.guard';
 
 @ApiTags('Auto Service > Mechanic')
 @Controller('mechanics')
@@ -24,16 +28,25 @@ export class MechanicController {
     return this.mechanicService.create(createMechanicDto);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Roles(roles.MECHANIC)
   @Get()
   findAll(@Query() findAllMechanicQueryParams: FindAllMechanicQueryParams) {
     return this.mechanicService.findAll(findAllMechanicQueryParams);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Roles(roles.MECHANIC)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.mechanicService.findOne(id);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Roles(roles.MECHANIC)
   @Patch(':id')
   update(
     @Param('id') id: string,
