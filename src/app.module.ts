@@ -16,6 +16,7 @@ import { Part } from './parts/entities/part.entity';
 import { ServiceHasParts } from './service/entities/serviceHasParts.entity';
 import { LoginModule } from './login/login.module';
 import * as dotenv from 'dotenv';
+
 dotenv.config();
 
 @Module({
@@ -30,6 +31,9 @@ dotenv.config();
       password: process.env.DB_PASS,
       entities: [Client, Mechanic, Car, Service, Part, ServiceHasParts],
       logging: false,
+      ssl: {
+        rejectUnauthorized: false,
+      },
     }),
     ClientModule,
     MechanicModule,
