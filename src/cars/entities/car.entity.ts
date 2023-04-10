@@ -1,4 +1,4 @@
-import { Client } from 'src/client/entities/client.entity';
+import { Client } from '../../client/entities/client.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -33,4 +33,14 @@ export class Car {
   @ManyToOne(() => Client, (client) => client.cars)
   @JoinColumn({ name: 'client_id', referencedColumnName: 'id' })
   client?: Client;
+
+  constructor(car?: Partial<Car>) {
+    this.id = car?.id;
+    this.license_plate = car?.license_plate;
+    this.model = car?.model;
+    this.year = car?.year;
+    this.manufacturer = car?.manufacturer;
+    this.color = car?.color;
+    this.client_id = car?.client_id;
+  }
 }

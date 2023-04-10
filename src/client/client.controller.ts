@@ -14,9 +14,9 @@ import { FindAllClientQueryParams } from './dto/client/findAllClientQueryParams.
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/login/jwt-auth.guard';
-import { Roles } from 'src/login/roles.decorator';
-import { roles } from 'src/login/dto/roles.enum';
+import { JwtAuthGuard } from '../login/jwt-auth.guard';
+import { Roles } from '../login/roles.decorator';
+import { roles } from '../login/dto/roles.enum';
 
 @ApiTags('Auto Service > Client')
 @Controller('clients')

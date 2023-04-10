@@ -9,7 +9,7 @@ import { FindAllServiceQueryParams } from './dto/service/findAllServiceQueryPara
 import { ServiceHasParts } from './entities/serviceHasParts.entity';
 
 import { v4 as uuidv4 } from 'uuid';
-import { Part } from 'src/parts/entities/part.entity';
+import { Part } from '../parts/entities/part.entity';
 
 @Injectable()
 export class ServiceService {

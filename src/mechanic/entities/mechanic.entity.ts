@@ -34,4 +34,18 @@ export class Mechanic {
 
   @Column({ type: 'json' })
   specialities: string[];
+
+  constructor(mechanic?: Partial<Mechanic>) {
+    this.id = mechanic?.id;
+    this.name = mechanic?.name;
+    this.cpf = mechanic?.cpf;
+    this.birthday = mechanic?.birthday;
+    this.phone = mechanic?.phone;
+    this.email = mechanic?.email;
+    this.password = mechanic?.password;
+    this.hiringDate = mechanic?.hiringDate;
+    this.serviceFee = mechanic?.serviceFee;
+    this.status = mechanic?.status;
+    this.specialities = mechanic?.specialities;
+  }
 }

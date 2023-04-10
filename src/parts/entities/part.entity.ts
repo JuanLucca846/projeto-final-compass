@@ -1,4 +1,4 @@
-import { ServiceHasParts } from 'src/service/entities/serviceHasParts.entity';
+import { ServiceHasParts } from '../../service/entities/serviceHasParts.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity({ name: 'parts' })
@@ -20,4 +20,13 @@ export class Part {
 
   @OneToMany(() => ServiceHasParts, (serviceHasParts) => serviceHasParts.parts)
   serviceHasParts?: ServiceHasParts[];
+
+  constructor(part?: Partial<Part>) {
+    this.id = part?.id;
+    this.title = part?.title;
+    this.description = part?.description;
+    this.qtd = part?.qtd;
+    this.unitPrice = part?.unitPrice;
+    this.serviceHasParts = part?.serviceHasParts;
+  }
 }

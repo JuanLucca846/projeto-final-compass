@@ -132,6 +132,9 @@ export class CarsService {
     if (!checkCar) {
       throw new NotFoundException('Can not find a car to delete');
     }
-    return this.carRepository.delete({ id: carId });
+
+    await this.carRepository.delete({ id: carId });
+
+    return 'Car successfully removed';
   }
 }

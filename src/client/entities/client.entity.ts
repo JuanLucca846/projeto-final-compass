@@ -1,4 +1,4 @@
-import { Car } from 'src/cars/entities/car.entity';
+import { Car } from '../../cars/entities/car.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -50,4 +50,21 @@ export class Client {
 
   @OneToMany(() => Car, (car) => car.client)
   cars?: Car[];
+
+  constructor(client?: Partial<Client>) {
+    this.id = client?.id;
+    this.name = client?.name;
+    this.cpf_cnpj = client?.cpf_cnpj;
+    this.client_type = client?.client_type;
+    this.birthday = client?.birthday;
+    this.phone = client?.phone;
+    this.email = client?.email;
+    this.password = client?.password;
+    this.zipCode = client?.zipCode;
+    this.street = client?.street;
+    this.number = client?.number;
+    this.neighbourhood = client?.neighbourhood;
+    this.city = client?.city;
+    this.cars = client?.cars;
+  }
 }

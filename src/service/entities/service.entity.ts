@@ -30,4 +30,15 @@ export class Service {
     { cascade: true },
   )
   serviceHasParts: ServiceHasParts[];
+
+  constructor(service?: Partial<Service>) {
+    this.id = service?.id;
+    this.clientId = service?.clientId;
+    this.carId = service?.carId;
+    this.mechanicId = service?.mechanicId;
+    this.serviceEstimatedDeliveryDate = service?.serviceEstimatedDeliveryDate;
+    this.description = service?.description;
+    this.status = service?.status;
+    this.serviceHasParts = service?.serviceHasParts;
+  }
 }

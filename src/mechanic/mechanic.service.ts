@@ -130,7 +130,7 @@ export class MechanicService {
         birthday: mechanic.birthday,
         phone: mechanic.phone,
         email: mechanic.email,
-        specialties: mechanic.specialities,
+        specialities: mechanic.specialities,
         hiringDate: mechanic.hiringDate,
         serviceFee: mechanic.serviceFee,
         status: mechanic.status,

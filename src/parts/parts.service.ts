@@ -25,7 +25,7 @@ export class PartsService {
     return this.partRepository.save(partData);
   }
 
-  async findAll(queryParams: FindAllPartQueryParams): Promise<Part[]> {
+  async findAll(queryParams: FindAllPartQueryParams) {
     const { offset, limit } = queryParams;
 
     const offsetInt = parseInt(offset);
@@ -60,11 +60,24 @@ export class PartsService {
       };
     }
 
-    return this.partRepository.find({
+    const findAllParts = await this.partRepository.find({
       skip: offsetInt * limitInt,
       take: limitInt,
       where,
     });
+
+    return {
+      limit: 10,
+      offset: 0,
+      total: findAllParts.length,
+      items: findAllParts.map((parts) => ({
+        partId: parts.id,
+        title: parts.title,
+        description: parts.description,
+        qtd: parts.qtd,
+        unitPrice: parts.unitPrice,
+      })),
+    };
   }
 
   findOne(id: string) {

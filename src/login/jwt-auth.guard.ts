@@ -11,16 +11,12 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
-    console.log('roles', roles);
-    const request = context.switchToHttp().getRequest();
 
-    console.log(request.headers.authorization.replace('Bearer ', ''));
+    const request = context.switchToHttp().getRequest();
 
     const token = request.headers.authorization.replace('Bearer ', '');
 
     const jwtDecode = (await this.jwtService.decode(token)) as any;
-
-    console.log(jwtDecode);
 
     if (jwtDecode) {
       const { role } = jwtDecode;

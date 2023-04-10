@@ -14,9 +14,9 @@ import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 import { FindAllServiceQueryParams } from './dto/service/findAllServiceQueryParams.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/login/jwt-auth.guard';
-import { Roles } from 'src/login/roles.decorator';
-import { roles } from 'src/login/dto/roles.enum';
+import { JwtAuthGuard } from '../login/jwt-auth.guard';
+import { Roles } from '../login/roles.decorator';
+import { roles } from '../login/dto/roles.enum';
 
 @ApiTags('Auto Service > Service')
 @Controller('services')

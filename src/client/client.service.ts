@@ -142,6 +142,7 @@ export class ClientService {
         name: client.name,
         cpf_cnpj: client.cpf_cnpj,
         client_type: client.client_type,
+        birthday: client.birthday,
         phone: client.phone,
         email: client.email,
         street: client.street,

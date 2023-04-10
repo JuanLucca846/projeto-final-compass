@@ -1,4 +1,4 @@
-import { Part } from 'src/parts/entities/part.entity';
+import { Part } from '../../parts/entities/part.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,

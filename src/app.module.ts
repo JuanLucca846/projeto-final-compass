@@ -15,7 +15,8 @@ import { Service } from './service/entities/service.entity';
 import { Part } from './parts/entities/part.entity';
 import { ServiceHasParts } from './service/entities/serviceHasParts.entity';
 import { LoginModule } from './login/login.module';
-import { APP_GUARD } from '@nestjs/core';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Module({
   imports: [

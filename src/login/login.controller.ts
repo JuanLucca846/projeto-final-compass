@@ -1,4 +1,10 @@
-import { Controller, Post, Body, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UseGuards,
+  NotFoundException,
+} from '@nestjs/common';
 import { LoginService } from './login.service';
 import { LoginDto } from './dto/create-login.dto';
 import { UpdateLoginDto } from './dto/update-login.dto';
@@ -7,7 +13,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { Roles } from './roles.decorator';
 import { roles } from './dto/roles.enum';
-import { RolesGuard } from './roles.guard';
+import { Db } from 'typeorm';
 
 @ApiTags('Auto Service > Login')
 @Controller()

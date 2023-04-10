@@ -5,11 +5,11 @@ import {
 } from '@nestjs/common';
 import { LoginDto } from './dto/create-login.dto';
 import { UpdateLoginDto } from './dto/update-login.dto';
-import { Client } from 'src/client/entities/client.entity';
+import { Client } from '../client/entities/client.entity';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Mechanic } from 'src/mechanic/entities/mechanic.entity';
+import { Mechanic } from '../mechanic/entities/mechanic.entity';
 import * as bcrypt from 'bcrypt';
 import { instanceToPlain } from 'class-transformer';
 import { TokenDto } from './dto/refresh-token.dto';

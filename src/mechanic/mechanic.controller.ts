@@ -14,9 +14,9 @@ import { CreateMechanicDto } from './dto/create-mechanic.dto';
 import { UpdateMechanicDto } from './dto/update-mechanic.dto';
 import { FindAllMechanicQueryParams } from './dto/mechanic/findAllMechanicQueryParams.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { roles } from 'src/login/dto/roles.enum';
-import { Roles } from 'src/login/roles.decorator';
-import { JwtAuthGuard } from 'src/login/jwt-auth.guard';
+import { roles } from '../login/dto/roles.enum';
+import { Roles } from '../login/roles.decorator';
+import { JwtAuthGuard } from '../login/jwt-auth.guard';
 
 @ApiTags('Auto Service > Mechanic')
 @Controller('mechanics')
