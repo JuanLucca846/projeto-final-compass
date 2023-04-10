@@ -24,6 +24,8 @@
 
 ## Description
 
+This project is a auto service api, that let the mechanic register services done in the client cars.
+
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Installation
@@ -56,6 +58,18 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
+```
+
+### Enviroment
+
+```bash
+DB_HOST=
+DB_PORT=
+DB_USER=
+DB_PASS=
+DB_DATABASE=
+PORT=
+SECRET=
 ```
 
 ## Support
